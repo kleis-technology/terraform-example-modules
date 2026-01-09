@@ -24,7 +24,7 @@ variable "subnet_ids" {
 
 variable "vpc_security_group_ids" {
   description = "IDs of the security groups associated with the VPC"
-  type        = list(any)
+  type        = list(string)
 }
 
 variable "cluster_name" {
