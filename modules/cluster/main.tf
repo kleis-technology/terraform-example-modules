@@ -17,7 +17,7 @@ resource "aws_launch_template" "webserver" {
     associate_public_ip_address = true
   }
 
-  user_data = var.rendered_user_data # FIXME
+  user_data = base64encode(var.rendered_user_data)
 }
 
 resource "aws_autoscaling_group" "webserver" {
