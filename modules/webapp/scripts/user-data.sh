@@ -4,9 +4,7 @@ set -e
 mkdir -p /tmp/web
 cd /tmp/web
 
-sudo apt-get update
-sudo apt-get install -y python3-pip
-sudo pip3 install petname
+sudo apt install golang-petname
 
 cat > index.html <<EOF
 <h1>Hello, World</h1>
