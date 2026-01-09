@@ -2,31 +2,31 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 6.0"
     }
   }
 }
 
-resource "aws_launch_configuration" "webserver" {
-  image_id                    = var.ami_id
-  instance_type               = var.instance_type
-  key_name                    = var.ssh_key_name
-  associate_public_ip_address = true
-  user_data                   = var.rendered_user_data
-  security_groups             = var.vpc_security_group_ids
+resource "aws_launch_template" "webserver" {
+  image_id               = var.ami_id
+  instance_type          = var.instance_type
+  key_name               = var.ssh_key_name
+  vpc_security_group_ids = var.vpc_security_group_ids
 
-  # Required when using a launch configuration with an auto scaling group.
-  # https://www.terraform.io/docs/providers/aws/r/launch_configuration.html
-  lifecycle {
-    create_before_destroy = true
+  network_interfaces {
+    associate_public_ip_address = true
   }
+
+  user_data = var.rendered_user_data # FIXME
 }
 
 resource "aws_autoscaling_group" "webserver" {
-  launch_configuration = aws_launch_configuration.webserver.name
-  vpc_zone_identifier  = var.subnet_ids
-  target_group_arns    = [aws_lb_target_group.autoscaling_group.arn]
-  health_check_type    = "ELB"
+  launch_template {
+    id = aws_launch_template.webserver.id
+  }
+  vpc_zone_identifier       = var.subnet_ids
+  target_group_arns         = [aws_lb_target_group.autoscaling_group.arn]
+  health_check_type         = "ELB"
   health_check_grace_period = 30
 
   min_size = var.min_instance

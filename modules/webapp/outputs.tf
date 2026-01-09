@@ -4,6 +4,6 @@ output "ami_id" {
 }
 
 output "rendered_user_data" {
-  value       = data.template_file.user_data.rendered
+  value       = local.webserver_config_data
   description = "The rendered user data for the instance"
 }
