@@ -56,7 +56,7 @@ resource "aws_lb" "webserver" {
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.webserver.arn
-  port              = var.server_port
+  port              = 80
   protocol          = "HTTP"
 
   # By default, return a simple 404 page
@@ -73,7 +73,7 @@ resource "aws_lb_listener" "http" {
 
 resource "aws_lb_target_group" "autoscaling_group" {
   name     = var.cluster_name
-  port     = var.server_port
+  port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
 

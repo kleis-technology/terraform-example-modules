@@ -27,11 +27,6 @@ variable "vpc_security_group_ids" {
   type        = list(any)
 }
 
-variable "server_port" {
-  description = "The name to use for all the cluster resources"
-  type        = number
-}
-
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
   type        = string
