@@ -28,6 +28,5 @@ locals {
   webserver_config_data = templatefile("${path.module}/scripts/user-data.sh",
     {
       server_name = random_pet.vm.id
-      server_port = var.server_port
   })
 }

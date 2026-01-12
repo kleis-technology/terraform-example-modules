@@ -1,17 +1,11 @@
 #!/bin/bash
 set -e
 
-mkdir -p /tmp/web
-cd /tmp/web
+apt update
+apt -y install nginx golang-petname
 
-sudo apt install golang-petname
-
-cat > index.html <<EOF
+cat > /var/www/html/index.html <<EOF
 <h1>Hello, World</h1>
-<h2>My name is ${server_name}!</h2>
-<h2>My local name is $(petname -w 4)!</h2>
+<p>My name is <q>${server_name}!</q></p>
+<p>My local name is <q>$(petname -w 4)</q>!</p>
 EOF
-
-
-nohup python3 -m http.server ${server_port} --directory /tmp/web
-
