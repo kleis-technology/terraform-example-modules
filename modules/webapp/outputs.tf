@@ -1,5 +1,5 @@
 output "ami_id" {
-  value       = data.aws_ami.debian_buster.id
+  value       = data.aws_ami.debian_latest.id
   description = "The ID of the AMI that will run on the instances"
 }
 
